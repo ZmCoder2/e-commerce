@@ -9,9 +9,9 @@ router.get('/', async (req, res) => {
     const categoryData = await Category.findAll();
     res.status(200).json(categoryData);
   } catch {
-  // be sure to include its associated Products
+    // be sure to include its associated Products
     res.status(500).json(err);
-}
+  }
 });
 
 router.get('/:id', async (req, res) => {
@@ -19,10 +19,10 @@ router.get('/:id', async (req, res) => {
   try {
     // be sure to include its associated Products
     const categoryData = await Category.findByPk(req.params.id, {
-      include: [{model: Product}]
+      include: [{ model: Product }]
     })
     if (!categoryData) {
-      res.status(404).json({ });
+      res.status(404).json({message: "No Category Found With This ID"});
       return;
     }
     res.status(200).json(categoryData);
@@ -41,18 +41,20 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', async (req, res) => {
   // update a category by its `id` value
   try {
     // be sure to include its associated Products
     const categoryData = await Category.update({
+      category_name: req.body.category_name,
+    }, {
       where: {
         id: req.params.id
       },
-        include: [{model: Product}]
+      include: [{ model: Product }]
     })
     if (!categoryData) {
-      res.status(404).json({ });
+      res.status(404).json({message: "No Category Found With This ID"});
       return;
     }
     res.status(200).json(categoryData);
@@ -61,8 +63,23 @@ router.put('/:id', async(req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async(req, res) => {
   // delete a category by its `id` value
+  try {
+    // be sure to include its associated Products
+    const categoryData = await Category.destory({
+      where: {
+        id: req.params.id
+      }
+    })
+    if (!categoryData) {
+      res.status(404).json({ message: "No Category Found With This ID"});
+      return;
+    }
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
