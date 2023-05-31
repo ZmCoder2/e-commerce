@@ -117,7 +117,9 @@ router.delete('/:id', async(req, res) => {
       where: {
         id: req.params.id
       }
-    })
+    });
+    console.log(productData);
+
     if (!productData) {
       res.status(404).json({ message: "No Product Found With This ID"});
       return;
