@@ -13,5 +13,5 @@ When the user opens API GET routes in Insomnia Core for categories, products, or
 
 When the user wants to test API POST, PUT, and DELETE routes in Insomnia Core they are then able to successfully create, update and delete data in their database.
 
-## Video Demnstration
+## Video Demonstration
 https://drive.google.com/file/d/1ve4eVm4CU78A0XTpsOHKquJoafX7Jqjv/view
